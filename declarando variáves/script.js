@@ -1,0 +1,2 @@
+// tipagem dinâmica
+
