@@ -5,7 +5,7 @@ const texto =  "5";
 
 console.log(numero === texto)
 
-// typeof
+// typeof para saber o tipos da variavés 
 console.log(typeof numero)
 console.log(typeof texto)
 
