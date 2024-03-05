@@ -13,7 +13,7 @@ function mergeSort(array, nivelAninhamento = 0) {
 
     }
 
-    return array;
+    return array
 }
 
 function ordena(parte1,parte2){
