@@ -3,7 +3,7 @@ import chalk from 'chalk';
 
 function tratErro(erro){
     console.log(erro);
-    throw new Error(chalk.red(erro.code, 'não há arquivo no diretótrio'));
+    throw new Error(chalk.red(erro.code, 'não há arquivo no diretótrio')); // esta funcição é para localizar o erro no codigo
 }
 
 function pegaArquivo(caminhoDoArquivo){
