@@ -47,6 +47,6 @@ function trataErro(erro){
 //     } )
 // }
 
-pegaArquivo('./arquivos/texto.md');
+export default pegaArquivo;
 
 
