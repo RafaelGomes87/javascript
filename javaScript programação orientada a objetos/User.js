@@ -12,11 +12,44 @@
         this.#ativo = ativo
     }
 
+    #montaObjUser(){
+        return ({
+          nome: this.#nome,
+          email: this.#email,
+          nascimento: this.#nascimento,  
+          role: this.#role,
+          ativo: this.#ativo,
+        })
+    }
+
     exibirInfos(){
-        return `${this.#nome}, ${this.#email}, ${this.#nascimento}, ${this.#role}, ${this.#ativo} `
+        const objUser = this.#montaObjUser()
+        return `${objUser.nome}, ${objUser.email}, ${objUser.nascimento}, ${objUser.role}, ${objUser.ativo} `
     }
 
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //  const novoUser = new User('Rafael', 'ra@fa.com','2021-01-01')
 //  console.log(novoUser),
 //  console.log(novoUser.exibirInfos())
