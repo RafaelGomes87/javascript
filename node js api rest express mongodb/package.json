@@ -13,6 +13,7 @@
   "author": "Rafael",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.18.1",
     "mongodb": "^6.5.0",
     "mongoose": "^7.3.4",
