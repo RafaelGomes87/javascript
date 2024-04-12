@@ -1,54 +1,69 @@
-import { autor } from "../models/Autor.js";
+import livro from "../modules/Livro.js";
+import {autor} from "../models/Autor.js"
+class LivroController {
 
-class AutorController {
+    static async listarLivros (req, res) {
+        try{
+            const listaLivros = await livro.find({});
+            res.status(200).json(listaLivros);
 
-  static async listarAutores (req, res) {
-    try {
-      const listaAutores = await autor.find({});
-      res.status(200).json(listaAutores);
-    } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha na requisição` });
+        } catch (erro) {
+            res.status(500).json({message:`${erro.message} - falha na requisição `})
+        }
+    };
+
+
+    static async listarLivroPorId (req, res) {
+        try{
+            const id = req.params.id;
+            const livroEncontrado = await livro.findById({});
+            res.status(200).json(livroEncontrado);
+
+        } catch (erro) {
+            res.status(500).json({message:`${erro.message} - falha na requisição do livro `})
+        }
+    };
+
+    static async cadastrarLivro (req, res){
+    const novoLivro = req.body;
+    try{
+     const autorEncontrado = await autor.findById(novoLivro.autor);
+     const livroCompleto = {...novoLivro, autor:{...autorEncontrado._doc}};   
+     const livroCriado = await livro.create(livroCompleto);
+
+    res.status(201).json({message: "criado com sucesso",livro:novoLivro});
+    } catch (erro){
+    res.status(500).json({message:`${erro.message} - falha ao cadastroa livro `});
     }
-  };
+   
+ };
 
-  static async listarAutorPorId (req, res) {
-    try {
-      const id = req.params.id;
-      const autorEncontrado = await autor.findById(id);
-      res.status(200).json(autorEncontrado);
-    } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha na requisição do autor` });
-    }
-  };
+ static async atualizarLivro (req, res) {
+    try{
+        const id = req.params.id;
+        await livro.findByIdAndUpdate(id, req.body);
+        res.status(200).json({message:"livro atualizado"});
 
-  static async cadastrarAutor (req, res) {
-    try {
-      const novoAutor = await autor.create(req.body);
-      res.status(201).json({ message: "criado com sucesso", livro: novoAutor });
     } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha ao cadastrar autor` });
+        res.status(500).json({message:`${erro.message} - falha na atualização `})
     }
-  }
-
-  static async atualizarAutor (req, res) {
-    try {
-      const id = req.params.id;
-      await autor.findByIdAndUpdate(id, req.body);
-      res.status(200).json({ message: "autor atualizado" });
-    } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha na atualização` });
-    }
-  };
-
-  static async excluirAutor (req, res) {
-    try {
-      const id = req.params.id;
-      await autor.findByIdAndDelete(id);
-      res.status(200).json({ message: "autor excluído com sucesso" });
-    } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha na exclusão` });
-    }
-  };
+    
 };
 
-export default AutorController;
+static async excluirLivro (req, res) {
+    try{
+        const id = req.params.id;
+        await livro.findByIdAndDelete(id);
+        res.status(200).json({message:"livro excluido com sucesso "});
+
+    } catch (erro) {
+        res.status(500).json({message:`${erro.message} - falha na exclusão  `})
+    }
+    
+};
+
+
+
+};
+
+export default LivroController;
