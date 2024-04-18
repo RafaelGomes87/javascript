@@ -19,12 +19,17 @@ class AutorController {
         const id = req.params.id;
   
         const autorResultado = await autores.findById(id);
+
+        if (autorResultado !== null) {
+          res.status(200).send(autorResultado);
+        } else {
+          res.status(400).send({message:"- Id do Autor não localizado."});
+        }
   
-        res.status(200).send(autorResultado);
       } catch (erro) {
-        res.status(400).send({message: `${erro.message} - Id do Autor não localizado.`});
+        res.status(500).send({message:"Erro interno de servidor"});
       }
-    }
+    };
   
   
     static cadastrarAutor = async (req, res) => {
