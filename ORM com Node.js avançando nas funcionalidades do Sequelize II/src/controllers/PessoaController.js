@@ -10,34 +10,43 @@ class PessoaController extends Controller {
   }
 
   async pegaMatriculasAtivas(req, res) {
-    const { estudanteId } = req.params;
+    const { estudante_id } = req.params;
     try {
-      const listaMatriculas = await pessoaServices.pegaMatriculasAtivasPorEstudante(Number(estudanteId));
+      const listaMatriculas = await pessoaServices.pegaMatriculasAtivasPorEstudante(Number(estudante_id));
       return res.status(200).json(listaMatriculas);
     } catch (erro) {
-      return res.status(500).json({erro: erro.message});
-    }
-  }
-  async pegaTodasMatriculas(req, res) {
-    const { estudanteId } = req.params;
-    try {
-      const listaMatriculas = await pessoaServices.pegaTodasAsMatriculasEstudante(Number(estudanteId));
-      return res.status(200).json(listaMatriculas);
-    } catch (erro) {
-      return res.status(500).json({erro: erro.message});
+      return res.status(500).json({ erro: erro.message });
     }
   }
 
+  async pegaTodasAsMatriculas(req, res) {
+    const { estudante_id } = req.params;
+    try {
+      const listaMatriculas = await pessoaServices.pegaTodasAsMatriculasPorEstudante(Number(estudante_id));
+      return res.status(200).json(listaMatriculas);
+    } catch (erro) {
+      return res.status(500).json({ erro: erro.message });
+    }
+  }
 
-  async pegaTodosAsPessoas(req, res){
+  async pegaTodasAsPessoas(req, res) {
     try {
       const listaTodasAsPessoas = await pessoaServices.pegaPessoasEscopoTodos();
       return res.status(200).json(listaTodasAsPessoas);
     } catch (erro) {
-      return res.status(500).json({erro: erro.message});
+      return res.status(500).json({ erro: erro.message });
     }
   }
 
+  async cancelaRegistroEstudante (req, res) {
+    const { estudante_id } = req.params;
+    try {
+      await pessoaServices.cancelaPessoaEMatriculas(Number(estudante_id));
+      return res.status(200).json({ mensagem: `matrículas ref. estudante ${estudante_id} canceladas` });
+    } catch (erro) {
+      return res.status(500).json({ erro: erro.message });
+    }
+  }
 }
 
 module.exports = PessoaController;
