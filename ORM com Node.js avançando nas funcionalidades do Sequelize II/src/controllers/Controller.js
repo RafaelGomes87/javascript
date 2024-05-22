@@ -1,4 +1,4 @@
-const { params } = require('../routes/pessoasRoute.js');
+
 const converteIds = require('../utils/conversorDeStringHelper.js');
 
 
