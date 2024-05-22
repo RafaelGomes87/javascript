@@ -1,5 +1,6 @@
 const { params } = require('../routes/pessoasRoute.js');
-const converteIs = require('../utils/conversorDeStringHelper.js');
+const converteIds = require('../utils/conversorDeStringHelper.js');
+
 
 class Controller {
   constructor(entidadeService) {
@@ -50,7 +51,7 @@ class Controller {
     const { ...params } = req.params;
     const dadosAtualizados = req.body;
 
-    const where = converteIds (params);
+    const where = converteIds(params);
     try {
       //isUpdated
       const foiAtualizado = await this.entidadeService.atualizaRegistro(dadosAtualizados, where);
