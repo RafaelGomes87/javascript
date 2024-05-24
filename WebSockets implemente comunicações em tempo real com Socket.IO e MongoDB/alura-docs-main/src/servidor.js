@@ -13,10 +13,8 @@ app.use(express.static(diretorioPublico));
 
 const servidorHttp = http.createServer(app);
 
-servidorHttp.listen(porta, () => console.log(`Servidor escutando na porta ${porta} `))
+servidorHttp.listen(porta, () => console.log(`Servidor escutando na porta ${porta} `));
 
 const io = new Server(servidorHttp);
 
-io.on("conncetion", () => {
-   console.log("Um cliente se conectou.") 
-})
+export default io;
