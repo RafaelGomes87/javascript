@@ -1,4 +1,4 @@
-// import { atualizaDocumento, encontrarDocumento } from "./documentosDb.js";
+import { atualizaDocumento, encontrarDocumento } from "./documentosDb.js";
 import io from "./servidor.js";
 
 io.on("connection", (socket) => {
@@ -8,6 +8,8 @@ io.on("connection", (socket) => {
     socket.join(nomeDocumento);
 
     const documento = await encontrarDocumento(nomeDocumento);
+
+    console.log(documento);
 
     if (documento) {
       devolverTexto(documento.texto);
@@ -22,3 +24,6 @@ io.on("connection", (socket) => {
     }
   });
 });
+ 
+
+
