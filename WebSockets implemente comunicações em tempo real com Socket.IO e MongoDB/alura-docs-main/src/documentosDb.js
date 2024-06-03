@@ -5,6 +5,13 @@ function obterDocumentos() {
   return documentos;
 }
 
+function adicionarDocumento(nome) {
+  const resultado = documentosColecao.insertOne({
+    nome,
+    texto: "",
+ });
+}
+
 function encontrarDocumento(nome) {
   const documento = documentosColecao.findOne({
     nome,
@@ -27,6 +34,12 @@ function atualizaDocumento(nome, texto) {
 
   return atualizacao;
 }
+ function excluirDocumento(nome) {
+  const resultado = documentosColecao.deleteOne({
+    nome,
+  });  
+  return resultado;
+}
 
-export { encontrarDocumento, atualizaDocumento, obterDocumentos };
+export { encontrarDocumento, atualizaDocumento, obterDocumentos, adicionarDocumento, excluirDocumento };
 
