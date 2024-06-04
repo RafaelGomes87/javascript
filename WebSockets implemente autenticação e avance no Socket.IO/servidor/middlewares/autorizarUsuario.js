@@ -7,8 +7,8 @@ const tokenJwt = socket.handshake.auth.token;
 try{
     jwt.verify(tokenJwt, process.env.SEGREDo_JWT);
 
-    next();
-
+   
+   next();
 } catch (erro) {
    next(erro);
   }
