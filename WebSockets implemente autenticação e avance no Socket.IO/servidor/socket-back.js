@@ -1,3 +1,4 @@
+import "dotenv/config";
 import registrarEventosDocumento from "./registrarEventos/documento.js";
 import registrarEventosInicio from "./registrarEventos/inicio.js";
 import registrarEventosCadastro from "./registrarEventos/cadastro.js";
