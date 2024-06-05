@@ -1,12 +1,16 @@
 import { obterCookie } from "../utils/cookies.js";
-import { alertarERedirecionar, atualizaTextoEditor, tratarAutorizacaoSucesso } from "./documento.js";
+import { 
+  alertarERedirecionar, 
+  atualizaTextoEditor, 
+  atualizarInterfaceUsuarios, 
+  tratarAutorizacaoSucesso 
+} from "./documento.js";
 
 const socket = io("/usuarios", {
   auth: {
     token: obterCookie("tokenJwt")
   }
 });
-
 
 socket.on("autorizacao_sucesso", tratarAutorizacaoSucesso);
 
@@ -21,6 +25,8 @@ function selecionarDocumento(dadosEntrada) {
     atualizaTextoEditor(texto);
   });
 }
+
+socket.on("usuarios_no_documento", atualizarInterfaceUsuarios)
 
 function emitirTextoEditor(dados) {
   socket.emit("texto_editor", dados);
