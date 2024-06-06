@@ -3,7 +3,7 @@ import {
   encontrarDocumento,
   excluirDocumento,
 } from "../db/documentosDb.js";
-import { adicionarConexao, obterUsuariosDocumento, removerConexao } from "../utils/conexoesDocumentos.js";
+import { adicionarConexao, encontrarConexao, obterUsuariosDocumento, removerConexao } from "../utils/conexoesDocumentos.js";
 
   function registrarEventosDocumento(socket, io) {
     socket.on(
@@ -12,15 +12,28 @@ import { adicionarConexao, obterUsuariosDocumento, removerConexao } from "../uti
       const documento = await encontrarDocumento(nomeDocumento);
 
       if (documento) {
-          socket.join(nomeDocumento);
+          const conexaoEncontra = encontrarConexao(nomeDocumento, 
+           nomeUsuario);
+
+           if (!conexaoEncontra) {
+            socket.join(nomeDocumento);
 
           adicionarConexao({ nomeDocumento, nomeUsuario });
+
+          socket.data = {
+            usuarioEntrou: true,
+          };
 
           const usuariosNoDocumento = obterUsuariosDocumento(nomeDocumento);
 
           io.to(nomeDocumento).emit("usuarios_no_documento", usuariosNoDocumento);
                   
           devolverTexto(documento.texto);
+           
+        }else {
+          socket.emit("usuario_ja_no_documento");
+        }
+         
       }
       socket.on("texto_editor", async ({ texto, nomeDocumento }) => {
         const atualizacao = await atualizaDocumento(nomeDocumento, texto);
@@ -39,12 +52,14 @@ import { adicionarConexao, obterUsuariosDocumento, removerConexao } from "../uti
       });
 
       socket.on("disconnect", () =>  {
-        removerConexao(nomeDocumento, nomeUsuario)
+
+        if (socket.data.usuarioEntrou) {
+           removerConexao(nomeDocumento, nomeUsuario)
 
         const usuariosNoDocumento = obterUsuariosDocumento(nomeDocumento);
 
         io.to(nomeDocumento).emit("usuarios_no_documento", usuariosNoDocumento);
-
+        }     
       });
     }
   );
